@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: php
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            service: php
+    template:
+        metadata:
+            labels:
+                service: php
+        spec:
+            containers:
+                - name: php
+                  image: "unpetitlu/test-php"
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: php
+spec:
+    type: NodePort
+    selector:
+        service: php
+    ports:
+        - port: 9000
